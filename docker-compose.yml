@@ -1,0 +1,30 @@
+version: '3.7'
+
+services:
+ 
+ # Backend Api
+
+ face-app-api:
+  container_name: backend  
+  build: ./
+  command: npm start
+  working_dir: /usr/src/face-app-api
+  environment:
+   POSTGRES_URI: postgres://nikos:secret@postgres:5432/face-app-docker
+  ports:
+   - "3000:3000"
+  volumes:
+   - ./:/usr/src/face-app-api
+
+ # Postgres
+
+ postgres:
+  environment:
+   POSTGRES_USER: nikos
+   POSTGRES_PASSWORD: secret
+   POSTGRES_DB: face-app-docker
+   POSTGRES_HOST: postgres
+  container_name: postgres
+  build: ./postgres
+  ports:
+   - "5432:5432"
